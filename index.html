@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <title>كم سعرك بالسوق؟</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f7f7f7;
+      color: #333;
+      direction: rtl;
+      padding: 20px;
+      max-width: 500px;
+      margin: auto;
+    }
+    h1 {
+      text-align: center;
+      color: #b30000;
+    }
+    label {
+      font-weight: bold;
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #b30000;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .result {
+      background-color: #fff0f0;
+      padding: 15px;
+      margin-top: 20px;
+      border: 2px dashed #b30000;
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <h1>احسب سعرك بالسوق 😂</h1>
+
+  <label>العمر:</label>
+  <input type="number" id="age" placeholder="اكتب عمرك">
+
+  <label>شو بتدرس/بتشتغل؟</label>
+  <input type="text" id="job" placeholder="مثلاً: هندسة، طب، بطالة">
+
+  <label>بتعرف تطبخ؟</label>
+  <select id="cook">
+    <option value="yes">نعم</option>
+    <option value="no">لا</option>
+  </select>
+
+  <label>بتحب المنسف؟</label>
+  <select id="mansaf">
+    <option value="yes">أكيد</option>
+    <option value="no">للأسف لا</option>
+  </select>
+
+  <label>كم بتعطي حالك من 10؟</label>
+  <input type="number" id="rate" min="1" max="10">
+
+  <button onclick="calculatePrice()">احسب السعر</button>
+
+  <div class="result" id="result" style="display:none"></div>
+
+  <script>
+    function calculatePrice() {
+      const age = parseInt(document.getElementById('age').value);
+      const job = document.getElementById('job').value;
+      const cook = document.getElementById('cook').value;
+      const mansaf = document.getElementById('mansaf').value;
+      const rate = parseInt(document.getElementById('rate').value);
+
+      let price = 500000;
+
+      // إضافات السعر
+      if (age >= 20 && age <= 30) price += 300000;
+      if (job.includes("برمجة") || job.includes("طب")) price += 250000;
+      if (cook === "yes") price += 100000; else price -= 100000;
+      if (mansaf === "yes") price += 100000;
+      price += rate * 20000;
+
+      const comments = [
+        "تم تقييمك من قبل هيئة الـ Delivery Guys 😎",
+        job.includes("برمجة") ? "مبرمج؟ الله يعينك عالأسئلة من الناس 😂" : "شغل مرتب، ضيفها بالـ CV!",
+        cook === "yes" ? "بتعرف تطبخ؟ يعني جاهز للزواج!" : "لا تعرف تطبخ؟ ناقصك شوية تدريب يا بطل!",
+        mansaf === "no" ? "شو؟ ما بتحب المنسف؟ 😳 احنا بنمزح صح؟" : "محب المنسف = محترم بالفطرة",
+        `تقييمك الذاتي: ${rate}/10. احترام للنفس 👏`
+      ];
+
+      document.getElementById('result').style.display = 'block';
+      document.getElementById('result').innerHTML = `
+        <h3>سعرك بالسوق: ${price.toLocaleString()} دينار أردني 💰</h3>
+        <ul>${comments.map(c => `<li>${c}</li>`).join('')}</ul>
+      `;
+    }
+  </script>
+</body>
+</html>
